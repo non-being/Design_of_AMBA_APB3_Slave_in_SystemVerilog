@@ -18,7 +18,7 @@ Register Indexing:
 <br> With DATA_WIDTH = 32 and REG_NUM = 4, the MSB = 3 and LSB = 2. For PADDR from 0x00 to 0x03, PADDR[3:2] = 0, and so on.
 
 Simulation Waveform: <br>
-<img width="1830" height="337" alt="Screenshot (593)" src="https://github.com/user-attachments/assets/e9c7c8a2-e024-4dd1-b668-f20a3ed56e8a" />
+<img width="837" height="337" alt="Screenshot (593)a" src="https://github.com/user-attachments/assets/a6406653-26d2-40ea-ac72-82999a3b9239" />
 
 EDA Playground:
 <br>https://edaplayground.com/x/TWUV

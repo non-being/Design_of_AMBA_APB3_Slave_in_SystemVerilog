@@ -46,21 +46,17 @@ always_ff @(posedge PCLK or negedge PRESETn) begin
         end
     else begin
       state_current <= state_next;
-      if (state_current == SETUP) begin
-        if (tf_write && PENABLE) begin
-          case (PADDR[INDEX_MSB:INDEX_LSB])
-            0:  apb_reg[0] <= PWDATA;
-            1:  apb_reg[1] <= PWDATA;
-            2:  apb_reg[2] <= PWDATA;
-            3:  apb_reg[3] <= PWDATA;
-            default: ;
-          endcase
-        end
-      end
 	end
 end
 
-always_comb begin 
+always_comb begin
+  // In case of latch inference: 
+  // 	PRDATA = '0;
+  //	state_next = IDLE;
+  //	apb_reg[0] = '0;
+  //	apb_reg[1] = '0;
+  //	apb_reg[2] = '0;
+  //	apb_reg[3] = '0;
     unique case (state_current)
         IDLE: begin
             if (tf_write || tf_read) 
@@ -68,7 +64,16 @@ always_comb begin
             end
         SETUP: begin
             state_next = ACCESS;
-			if (tf_read && PENABLE) begin
+            if (tf_write && PENABLE) begin
+              case (PADDR[INDEX_MSB:INDEX_LSB])
+                0:  apb_reg[0] = PWDATA;
+                1:  apb_reg[1] = PWDATA;
+                2:  apb_reg[2] = PWDATA;
+                3:  apb_reg[3] = PWDATA;
+                default: ;
+              endcase
+            end
+            if (tf_read && PENABLE) begin
               case (PADDR[INDEX_MSB:INDEX_LSB])
                 0:  PRDATA = apb_reg[0];
                 1:  PRDATA = apb_reg[1];
